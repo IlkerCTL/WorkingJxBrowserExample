@@ -5,6 +5,6 @@ module com.example.alexnewdemo {
     requires jxbrowser.javafx;
 
 
-    //opens com.example.alexnewdemo to javafx.fxml;
+    opens com.example.alexnewdemo to javafx.fxml;
     exports com.example.alexnewdemo;
 }
