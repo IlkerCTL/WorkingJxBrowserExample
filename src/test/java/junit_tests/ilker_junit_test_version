@@ -1,0 +1,48 @@
+package junit_tests;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import backend.AppointmentScheduler;
+import backend.JSONCalendar;
+
+public class JSONCalendarTest {
+    private JSONCalendar jsonData;
+    private AppointmentScheduler scheduler;
+    
+    @BeforeEach
+    public void setUp() {
+        initializeJSONData();
+        initializeScheduler();
+    }
+    
+    private void initializeJSONData() {
+        jsonData = new JSONCalendar();
+        jsonData.read("AppointmentsTemplate_WithText.json");
+        // jsonData.printData();
+    }
+    
+    private void initializeScheduler() {
+        int year = 2023;
+        int month = 4;
+        scheduler = new AppointmentScheduler(year, month);
+        scheduler.populateDataFromJSON(jsonData);
+    }
+    
+    @Test
+    public void testGetTimeSlotTextWithInput() {
+        String expectedText = "Meeting with Professor Marcus Aurelius";
+        String actualText = scheduler.getAvailabilityText(1, "9:00 AM");
+        
+        assertEquals(expectedText, actualText);
+    }
+    
+    @Test
+    public void testTimeSlotStatus() {
+        boolean expectedStatus = false;
+        boolean actualStatus = scheduler.getAvailabilityStatus(1, "9:00 AM");
+        
+        assertEquals(expectedStatus, actualStatus);
+    }
+}
